@@ -459,12 +459,17 @@ FileUtils.cd File.dirname(__FILE__) do
   man   = glob(%w{man/man[0-9]/*})
   libs  = glob(%w{lib/**/*})
 
+  if $operatingsystem == "windows"
+    windows_bins = glob(%w{ext/windows/*bat})
+  end
+
   prepare_installation
 
   #build_rdoc(rdoc) if InstallOptions.rdoc
   #build_ri(ri) if InstallOptions.ri
   do_configs(configs, InstallOptions.config_dir) if InstallOptions.configs
   do_bins(bins, InstallOptions.bin_dir)
+  do_bins(windwos_bins, InstallOptions.bin_dir) if $operatingsystem == "windows"
   do_libs(libs)
   do_man(man) unless $operatingsystem == "windows"
 end
